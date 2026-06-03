@@ -31,6 +31,8 @@ export default function App() {
   const [showQuizModal, setShowQuizModal] = useState<boolean>(false);
   const [activeCategoryFilter, setActiveCategoryFilter] = useState<string>('all');
   const [zoomImage, setZoomImage] = useState<string | null>(null);
+  const [isQrOpen, setIsQrOpen] = useState<boolean>(false);
+  const [isCopied, setIsCopied] = useState<boolean>(false);
 
   // Contact Form state management
   const [contactForm, setContactForm] = useState<ContactMessage>({
@@ -101,6 +103,16 @@ export default function App() {
     );
   };
 
+  const handleCopyLink = () => {
+    try {
+      navigator.clipboard.writeText(window.location.href);
+      setIsCopied(true);
+      setTimeout(() => setIsCopied(false), 2000);
+    } catch (err) {
+      console.warn("Failed to copy link automatically.", err);
+    }
+  };
+
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setFormSubmitted(true);
@@ -144,7 +156,12 @@ export default function App() {
       <div className="bg-[#0f2e4f] text-[#f0f9ff] text-[11px] font-bold tracking-widest text-center py-2 px-4 uppercase flex justify-center items-center gap-2 relative z-50">
         <Sparkles className="w-3.5 h-3.5 text-amber-300 animate-spin" />
         <span>Kerala's Authorized ZAARA Dealer • Complimentary Direct Home Setup across Palakkode</span>
-        <span className="hidden md:inline">• Contact Showroom +91 9995081947</span>
+        <span className="hidden md:inline">
+          • Contact Showroom{' '}
+          <a href="tel:+919995081947" className="hover:text-amber-300 underline underline-offset-2 transition-colors">
+            +91 9995081947
+          </a>
+        </span>
       </div>
 
       {/* Navigation Subsystem */}
@@ -281,7 +298,10 @@ export default function App() {
               <Phone className="w-5 h-5 text-[#00617d] shrink-0" />
               <div>
                 <p className="text-xs font-extrabold uppercase text-[#0f2e4f]">Call for instant consultation</p>
-                <p className="text-sm font-semibold text-slate-600">+91 9995081947, +91 8137977542</p>
+                <p className="text-sm font-semibold text-slate-700">
+                  <a href="tel:+919995081947" className="hover:text-[#007b9e] font-bold transition-colors hover:underline">+91 9995081947</a>,{' '}
+                  <a href="tel:+918137977542" className="hover:text-[#007b9e] font-bold transition-colors hover:underline">+91 8137977542</a>
+                </p>
               </div>
             </div>
           </div>
@@ -557,16 +577,28 @@ export default function App() {
                   <Phone className="w-6 h-6 text-[#00617d] shrink-0" />
                   <div>
                     <p className="text-xs font-bold text-[#0f2e4f] uppercase tracking-wider">Phone Support</p>
-                    <p className="text-xs md:text-sm font-semibold text-slate-500">{SHOWROOM_INFO.phones.join(', ')}</p>
+                    <p className="text-xs md:text-sm font-semibold text-slate-600">
+                      <a href="tel:+919995081947" className="hover:text-[#007b9e] transition-colors hover:underline">+91 9995081947</a>,{' '}
+                      <a href="tel:+918137977542" className="hover:text-[#007b9e] transition-colors hover:underline">+91 8137977542</a>
+                    </p>
                   </div>
                 </div>
 
                 {/* Block 2 */}
                 <div className="flex items-center gap-4 p-5 rounded-lg bg-white border border-slate-200/50 shadow-xs">
                   <MapPin className="w-6 h-6 text-[#00617d] shrink-0" />
-                  <div>
+                  <div className="flex-1">
                     <p className="text-xs font-bold text-[#0f2e4f] uppercase tracking-wider">Palakkode Showroom Address</p>
-                    <p className="text-xs md:text-sm font-semibold text-slate-500">{SHOWROOM_INFO.address}</p>
+                    <p className="text-xs md:text-sm font-semibold text-slate-600">{SHOWROOM_INFO.address}</p>
+                    <a 
+                      href="https://www.google.com/maps/dir/?api=1&destination=Noor+E+Mall+Palakkode+Kerala"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[#007b9e] font-bold hover:underline text-[11px] uppercase tracking-wider mt-1.5 inline-flex items-center gap-1 hover:text-[#00617d]"
+                    >
+                      <span>Search Route / Navigate there</span>
+                      <ArrowRight className="w-3 h-3" />
+                    </a>
                   </div>
                 </div>
 
@@ -756,6 +788,66 @@ export default function App() {
       >
         <MessageCircle className="w-8 h-8 fill-white text-[#25D366] shrink-0" />
       </a>
+
+      {/* 10b. INSTANT MOBILE CONNECTOR (QR CODE FLOATING BUTTON) */}
+      <button 
+        onClick={() => setIsQrOpen(true)}
+        className="fixed bottom-8 left-8 z-[100] bg-[#00617d] text-white px-4 py-3 rounded-full flex items-center gap-2 shadow-xl hover:scale-105 active:scale-95 transition-all cursor-pointer font-bold text-xs uppercase tracking-wider"
+        title="Scan QR Code to open on your phone directly"
+      >
+        <Sparkles className="w-4 h-4 text-amber-300 animate-pulse" />
+        <span>Open on Mobile</span>
+      </button>
+
+      {/* 10c. QR CODE POPUP MODAL OVERLAY */}
+      {isQrOpen && (
+        <div className="fixed inset-0 z-[140] bg-black/60 flex items-center justify-center p-4 backdrop-blur-sm animate-fade-in">
+          <div className="bg-white rounded-2xl p-6 md:p-8 max-w-sm w-full border border-slate-200/80 shadow-2xl relative text-center space-y-6">
+            <button 
+              onClick={() => setIsQrOpen(false)}
+              className="absolute top-4 right-4 p-1.5 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-700 transition"
+            >
+              <X className="w-5 h-5" />
+            </button>
+            
+            <div className="space-y-2 text-[#181c1d]">
+              <span className="text-[#007b9e] text-[10px] font-black uppercase tracking-widest bg-[#f0f9ff] px-2.5 py-1 rounded-md inline-block border border-cyan-100">
+                Cross-Device Sync
+              </span>
+              <h3 className="font-serif text-xl font-bold text-[#0f2e4f]">
+                Open on Another Device
+              </h3>
+              <p className="text-slate-500 text-xs">
+                Scan this interactive QR Code using your phone camera or QR reader to access the live Sleep Studio immediately on your other device.
+              </p>
+            </div>
+
+            <div className="bg-slate-50 p-4 rounded-xl border border-slate-100 flex items-center justify-center">
+              <img 
+                src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(window.location.href)}`}
+                alt="Scan this barcode to visit Sleep Studio"
+                className="w-48 h-48 rounded shadow border border-slate-100 bg-white"
+              />
+            </div>
+
+            <div className="flex flex-col gap-2 pt-2">
+              <button 
+                onClick={handleCopyLink}
+                className="w-full py-2.5 bg-[#0f2e4f] text-white text-xs font-semibold uppercase tracking-wider hover:bg-[#1a4470] rounded-lg transition shadow-md flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <span>{isCopied ? "Link Copied!" : "Copy Live Link"}</span>
+              </button>
+              
+              <button 
+                onClick={() => setIsQrOpen(false)}
+                className="w-full py-2 text-slate-500 hover:text-slate-700 font-bold uppercase tracking-wider text-xs border border-transparent hover:border-slate-100 rounded-lg transition"
+              >
+                Close Window
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* 11. DETAILED CONFIGURATION MODAL OVERLAY */}
       <ProductDetailModal 
