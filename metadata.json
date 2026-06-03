@@ -1,0 +1,8 @@
+{
+  "name": "Remix: The Sleep Studio",
+  "description": "Authorized ZAARA Dealer in Palakkode, Kerala. Premium mattresses, luxury bedding, and restorative sleep products curated for your absolute comfort.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
