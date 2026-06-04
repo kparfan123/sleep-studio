@@ -32,3 +32,122 @@
 .cloud-shadow {
   box-shadow: 0 12px 40px rgba(15, 46, 79, 0.08);
 }
+
+/* Premium Night Mode / Dark Mode overrides */
+.dark {
+  background-color: #0b1329 !important;
+  color: #cbd5e1 !important;
+}
+
+body.dark {
+  background-color: #0b1329 !important;
+  color: #cbd5e1 !important;
+}
+
+.dark .bg-white {
+  background-color: #111d35 !important;
+}
+
+.dark .bg-slate-50 {
+  background-color: #0d1a30 !important;
+}
+
+.dark .bg-slate-100 {
+  background-color: #132442 !important;
+}
+
+.dark .bg-\[#f7fafb\] {
+  background-color: #0b1329 !important;
+}
+
+.dark .bg-\[#fafbfc\] {
+  background-color: #111d35 !important;
+}
+
+.dark .bg-\[#f1f4f5\] {
+  background-color: #182847 !important;
+}
+
+.dark .bg-\[#f0f9ff\] {
+  background-color: #0f243c !important;
+  color: #38bdf8 !important;
+}
+
+.dark .bg-white\/90 {
+  background-color: rgba(17, 29, 53, 0.9) !important;
+}
+
+.dark .border-slate-100,
+.dark .border-slate-200,
+.dark .border-cyan-200 {
+  border-color: #1e3153 !important;
+}
+
+.dark .text-[#181c1d] {
+  color: #e2e8f0 !important;
+}
+
+.dark .text-[#0f2e4f] {
+  color: #f1f5f9 !important;
+}
+
+.dark .text-slate-600 {
+  color: #cbd5e1 !important;
+}
+
+.dark .text-slate-500 {
+  color: #94a3b8 !important;
+}
+
+.dark .text-slate-400 {
+  color: #64748b !important;
+}
+
+.dark .text-slate-800 {
+  color: #f1f5f9 !important;
+}
+
+.dark .text-[#00617d],
+.dark .text-[#007b9e] {
+  color: #38bdf8 !important;
+}
+
+.dark .bg-[#007b9e],
+.dark .bg-[#00617d] {
+  background-color: #0284c7 !important;
+}
+
+.dark .hover\:bg-\[#007b9e\]:hover,
+.dark .hover\:bg-\[#00617d\]:hover {
+  background-color: #0369a1 !important;
+}
+
+.dark .shadow-sm {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4) !important;
+}
+
+.dark .cloud-shadow {
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4) !important;
+}
+
+.dark .hover\:bg-slate-50:hover {
+  background-color: #182847 !important;
+}
+
+.dark .hover\:bg-slate-100:hover {
+  background-color: #1e3158 !important;
+}
+
+.dark input,
+.dark textarea,
+.dark select {
+  background-color: #132442 !important;
+  color: #ebdcb9 !important;
+  border-color: #1e3153 !important;
+}
+
+.dark input::placeholder,
+.dark textarea::placeholder {
+  color: #475569 !important;
+}
+

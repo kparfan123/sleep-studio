@@ -13,8 +13,36 @@ import ProductDetailModal from './components/ProductDetailModal';
 import CartDrawer from './components/CartDrawer';
 import SleepQuiz from './components/SleepQuiz';
 import Reviews from './components/Reviews';
+import { motion } from 'motion/react';
 
 export default function App() {
+  // Theme state with localStorage persistence
+  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
+    try {
+      const stored = localStorage.getItem('sleep_studio_theme');
+      return (stored as 'light' | 'dark') || 'light';
+    } catch {
+      return 'light';
+    }
+  });
+
+  const handleToggleTheme = () => {
+    setTheme(prev => prev === 'dark' ? 'light' : 'dark');
+  };
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('sleep_studio_theme', theme);
+    } catch (err) {
+      console.warn("Storage write failed:", err);
+    }
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [theme]);
+
   // Cart state with localStorage persistence
   const [cart, setCart] = useState<CartItem[]>(() => {
     try {
@@ -150,7 +178,7 @@ export default function App() {
     : PRODUCTS.filter(p => p.category === activeCategoryFilter);
 
   return (
-    <div className="min-h-screen bg-[#f7fafb] text-[#181c1d] font-sans antialiased selection:bg-[#007b9e] selection:text-white">
+    <div className={`min-h-screen ${theme === 'dark' ? 'bg-[#0b1329] text-[#f1f5f9]' : 'bg-[#f7fafb] text-[#181c1d]'} font-sans antialiased selection:bg-[#007b9e] selection:text-white transition-colors duration-300`}>
       
       {/* Upper Announcement info banner */}
       <div className="bg-[#0f2e4f] text-[#f0f9ff] text-[11px] font-bold tracking-widest text-center py-2 px-4 uppercase flex justify-center items-center gap-2 relative z-50">
@@ -171,6 +199,8 @@ export default function App() {
         onOpenQuiz={() => {
           handleScrollToSection('quiz');
         }} 
+        theme={theme}
+        onToggleTheme={handleToggleTheme}
       />
 
       {/* Central Interactive Alerts feedback popup */}
@@ -529,10 +559,14 @@ export default function App() {
                 "md:col-span-4 md:row-span-1"  // 4th is balanced
               ];
               return (
-                <div 
+                <motion.div 
                   key={item.id}
                   onClick={() => setZoomImage(item.image)}
                   className={`relative group rounded-xl overflow-hidden cursor-zoom-in shadow-sm border border-slate-100 ${gridSpans[idx]}`}
+                  initial={{ opacity: 0, y: 35 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-40px" }}
+                  transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1], delay: idx * 0.12 }}
                 >
                   <img 
                     src={item.image} 
@@ -543,7 +577,7 @@ export default function App() {
                     <span className="text-xs text-amber-300 font-bold block mb-0.5 select-none">{item.category}</span>
                     <h4 className="font-serif text-white font-extrabold text-lg select-none">{item.title}</h4>
                   </div>
-                </div>
+                </motion.div>
               );
             })}
           </div>
