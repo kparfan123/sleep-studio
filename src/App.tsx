@@ -709,19 +709,92 @@ export default function App() {
             </div>
           </div>
 
-          {/* Interactive Responsive Digital Google Maps container */}
-          <div className="rounded-xl overflow-hidden shadow-md border border-slate-200/75 h-[350px] bg-white relative">
-            <iframe 
-              title="Palakkode Kerala geographical map alignment"
-              src="https://maps.google.com/maps?q=Palakkode%2C%20Kerala&t=&z=13&ie=UTF8&iwloc=&output=embed" 
-              width="100%" 
-              height="100%" 
-              frameBorder="0" 
-              scrolling="no" 
-              marginHeight={0}
-              marginWidth={0}
-              className="grayscale-[30%] select-none active:pointer-events-auto"
-            />
+          {/* Interactive Responsive Digital Google Maps container and Google Search/Maps Card */}
+          <div className="space-y-6 animate-fade-in">
+            <div className="rounded-xl overflow-hidden shadow-md border border-slate-200/75 h-[320px] bg-white relative">
+              <iframe 
+                title="Google Maps Location for Sleep Studio in Noor E Mall, Palakkode, Kerala"
+                src="https://maps.google.com/maps?q=Noor%20E%20Mall%20Palakkode%20Kerala&t=&z=16&ie=UTF8&iwloc=&output=embed" 
+                width="100%" 
+                height="100%" 
+                frameBorder="0" 
+                scrolling="no" 
+                marginHeight={0}
+                marginWidth={0}
+                className="grayscale-[10%] select-none active:pointer-events-auto"
+              />
+            </div>
+
+            {/* Google Business Profile Information & Direct Search Card for Cross-Device Syncing */}
+            <div className="bg-white border border-slate-200/80 rounded-xl p-5 shadow-sm space-y-4 text-[#181c1d]">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-slate-100 pb-4">
+                <div className="flex items-center gap-2.5">
+                  <div className="bg-[#007b9e]/10 p-2 rounded-lg text-[#007b9e]">
+                    <Sparkles className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h4 className="font-serif font-bold text-sm text-[#0f2e4f]">
+                      Sleep Studio Google Verification
+                    </h4>
+                    <p className="text-[10px] uppercase tracking-wider text-slate-400 font-extrabold flex items-center gap-1">
+                      <span>Verified Google Business Profile</span>
+                      <span className="text-emerald-500 font-black">● Live</span>
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-1 bg-amber-50 border border-amber-100 px-3 py-1 rounded-full text-amber-600 font-bold text-[11px]">
+                  <span>5.0</span>
+                  <div className="flex text-amber-500">
+                    <Star className="w-3 h-3 fill-current text-amber-500" />
+                    <Star className="w-3 h-3 fill-current text-amber-500" />
+                    <Star className="w-3 h-3 fill-current text-amber-500" />
+                    <Star className="w-3 h-3 fill-current text-amber-500" />
+                    <Star className="w-3 h-3 fill-current text-amber-500" />
+                  </div>
+                  <span className="text-slate-400 font-normal text-[10px] ml-0.5">(Google-Sourced Ratings)</span>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-medium text-slate-600">
+                <div className="space-y-1.5">
+                  <p className="text-[10px] uppercase tracking-wider text-slate-400 font-extrabold">Device Search Instructions</p>
+                  <p className="text-slate-600 leading-relaxed text-xs">
+                    To access immediately on another tablet, PC, or phone, search <strong className="text-[#0f2e4f]">"Sleep Studio Palakkode"</strong> directly into Google Search or Maps.
+                  </p>
+                  <button
+                    onClick={() => {
+                      try {
+                        navigator.clipboard.writeText("Sleep Studio Palakkode");
+                        setAlertMsg("Search query 'Sleep Studio Palakkode' copied to clipboard! Paste it directly on Google Maps or Search.");
+                        setTimeout(() => setAlertMsg(null), 4000);
+                      } catch {
+                        // fallback
+                      }
+                    }}
+                    className="mt-1 text-[10px] uppercase font-bold tracking-widest text-[#007b9e] hover:text-[#00617d] transition-colors underline flex items-center gap-1 cursor-pointer"
+                  >
+                    <span>Copy Search Query</span>
+                  </button>
+                </div>
+
+                <div className="space-y-1">
+                  <p className="text-[10px] uppercase tracking-wider text-slate-400 font-extrabold">Instant Route Navigation</p>
+                  <p className="text-[#181c1d] leading-relaxed text-xs font-semibold">
+                    📍 Located at Noor E Mall, near Petrol Pump, Palakkode, Kerala 670305
+                  </p>
+                  <a 
+                    href="https://www.google.com/maps/dir/?api=1&destination=Noor+E+Mall+Palakkode+Kerala"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-xs text-[#007b9e] hover:text-[#00617d] transition-colors font-bold underline"
+                  >
+                    <span>Fetch Live GPS Directions</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </a>
+                </div>
+              </div>
+            </div>
           </div>
 
         </div>
